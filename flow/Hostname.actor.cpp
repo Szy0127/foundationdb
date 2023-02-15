@@ -75,7 +75,7 @@ ACTOR Future<NetworkAddress> resolveWithRetryImpl(Hostname* self) {
 	state double resolveInterval = FLOW_KNOBS->HOSTNAME_RESOLVE_INIT_INTERVAL;
 	loop {
 		try {
-			Optional<NetworkAddress> address = wait(resolveImpl(self));
+			Optional<NetworkAddress> address = self->resolveBlocking();
 			if (address.present()) {
 				return address.get();
 			}
